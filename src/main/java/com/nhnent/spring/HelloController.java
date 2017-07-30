@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HelloController {
-    // TODO: name 파라미터로 전달받은 이름이 출력되도록 수정하시오.
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public ModelAndView hello(@RequestParam(name = "name") String name) {
 

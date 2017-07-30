@@ -1,5 +1,7 @@
 package com.nhnent.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +11,10 @@ import java.util.List;
 
 @RestController
 public class PlayerController {
+    // TODO: 8. DAO 빈 주입
+    @Autowired
+    PlayerDao playerDao;
+
     @RequestMapping(value = "/players", method = RequestMethod.GET)
     public List<Player> getPlayers() {
         Player player1 = new Player();
@@ -26,6 +32,12 @@ public class PlayerController {
         players.add(player2);
 
         return players;
+    }
+
+    // TODO: 9. `GET /players/{id}`
+    @RequestMapping(value = "/players/{id}", method = RequestMethod.GET)
+    public Player getPlayer(@PathVariable Long id) {
+        return playerDao.selectPlayer(id);
     }
 
 }

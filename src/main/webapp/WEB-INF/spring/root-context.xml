@@ -4,5 +4,29 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	<!-- TODO: 3. Mybatis를 이용하기 위한 빈 설정 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<!-- TODO: 4. 데이터베이스 스키마 파일 -->
+		<property name="url" value="jdbc:h2:~/test;INIT=RUNSCRIPT FROM 'classpath:/script/schema.sql'" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- TODO: 5. Mybatis 설정 파일 -->
+		<property name="configLocation"  value="classpath:/mapper/mybatis-config.xml" />
+		<!-- TODO: 6. Mybatis Mapper 파일 -->
+		<property name="mapperLocations" value="classpath:/mapper/*Mapper.xml" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
 </beans>

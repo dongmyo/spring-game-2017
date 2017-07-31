@@ -18,4 +18,10 @@ public class PlayerDao {
         return sqlSessionTemplate.selectOne(NAMESPACE + "selectPlayer", id);
     }
 
+    public Long insertPlayer(Player player) {
+        sqlSessionTemplate.insert(NAMESPACE + "insertPlayer", player);
+
+        return player.getId();
+    }
+
 }

@@ -6,6 +6,10 @@
         (NICK, IP, CREATED_AT)
         VALUES
         (#{nick}, #{ip}, NOW())
+
+        <selectKey keyProperty="id" keyColumn="PLAYER_NO" order="AFTER" resultType="long">
+            CALL IDENTITY()
+        </selectKey>
     </insert>
 
     <select id="selectPlayer" parameterType="long" resultMap="playerResultMap">
